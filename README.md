@@ -1,4 +1,4 @@
-# Software Engineer Portfolio Website
+# Portfolio Website
 
 A modern, responsive portfolio website built with Vue.js and Vite to showcase my work experience, projects, education, and hobbies.
 
