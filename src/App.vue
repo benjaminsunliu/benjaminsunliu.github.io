@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted, computed, getCurrentInstance } from 'vue';
 import Header from './components/Header.vue';
 import Hero from './components/Hero.vue';
 import Experience from './components/Experience.vue';
@@ -8,11 +8,34 @@ import Education from './components/Education.vue';
 import Hobbies from './components/Hobbies.vue';
 import Footer from './components/Footer.vue';
 
+const app = getCurrentInstance();
 const activeSection = ref('hero');
+const isMobile = computed(() => app?.appContext.config.globalProperties.$isMobile || false);
+
+// Mobile-specific optimizations
+onMounted(() => {
+  // Listen for scroll events (throttled for performance)
+  let lastScrollTime = 0;
+  window.addEventListener('scroll', () => {
+    const now = Date.now();
+    if (now - lastScrollTime > 100) { // throttle to 100ms
+      lastScrollTime = now;
+      
+      // Add a class to the body when scrolling for mobile-specific animations
+      document.body.classList.add('is-scrolling');
+      
+      // Remove the class after scrolling stops
+      clearTimeout(window.scrollTimeout);
+      window.scrollTimeout = setTimeout(() => {
+        document.body.classList.remove('is-scrolling');
+      }, 300);
+    }
+  }, { passive: true });
+});
 </script>
 
 <template>
-  <div class="portfolio">
+  <div class="portfolio" :class="{ 'is-mobile': isMobile }">
     <Header :activeSection="activeSection" />
     <main>
       <Hero id="hero" @visible="activeSection = 'hero'" />
@@ -37,6 +60,8 @@ const activeSection = ref('hero');
   --border-radius: 8px;
   --transition: all 0.3s ease;
   --header-height: 70px;
+  --mobile-header-height: 60px;
+  --content-padding-mobile: 16px;
 }
 
 html {
@@ -119,7 +144,23 @@ p {
   transform: translateY(-2px);
 }
 
+/* Mobile-specific styles */
+.is-mobile .btn {
+  /* Larger touch target for mobile */
+  padding: 0.9rem 1.6rem;
+}
+
+/* Optimize scrolling performance */
+.is-scrolling * {
+  pointer-events: none;
+}
+
+/* Media Queries for Mobile Responsiveness */
 @media (max-width: 768px) {
+  html {
+    scroll-padding-top: var(--mobile-header-height);
+  }
+
   h1 {
     font-size: 2.5rem;
   }
@@ -128,8 +169,58 @@ p {
     font-size: 2rem;
   }
   
+  h2::after {
+    width: 40px;
+    height: 3px;
+  }
+  
   section {
     padding: 3rem 0;
+    min-height: calc(100vh - var(--mobile-header-height));
+  }
+  
+  .portfolio {
+    padding: 0 var(--content-padding-mobile);
+  }
+  
+  /* Improve tap targets */
+  a, button, input, select, textarea {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Better handling for images on mobile */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* Improve form fields on mobile */
+  input, textarea, select {
+    font-size: 16px; /* Prevents zoom on iOS */
+    padding: 12px;
+    margin-bottom: 16px;
+    border-radius: var(--border-radius);
+  }
+}
+
+/* Optimize for smaller phones */
+@media (max-width: 480px) {
+  h1 {
+    font-size: 2rem;
+  }
+  
+  h2 {
+    font-size: 1.75rem;
+  }
+  
+  p {
+    font-size: 0.95rem;
+  }
+  
+  .btn {
+    padding: 0.75rem 1.3rem;
+    font-size: 0.95rem;
   }
 }
 </style>
