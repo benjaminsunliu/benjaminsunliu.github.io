@@ -5,7 +5,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #181c1f;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -14,6 +14,47 @@
   
   /* Mobile viewport height variable */
   --vh: 1vh;
+}
+
+html {
+  min-height: 100vh;
+  height: 100%;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  height: 100%;
+  overscroll-behavior: none;
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-top: env(safe-area-inset-top);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+  width: 100%;
+  box-sizing: border-box;
+  /* Remove background-image here for mobile, handled by ::before */
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  z-index: -1;
+  top: 0; left: 0; right: 0; bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(135deg, #181c1f 0%, #232b33 100%);
+  background-size: cover;
+  background-repeat: no-repeat;
+  pointer-events: none;
+}
+
+@media (min-width: 769px) {
+  html, body {
+    background-attachment: fixed;
+    background-image: linear-gradient(135deg, #181c1f 0%, #232b33 100%);
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
 }
 
 /* Improved touchable area for interactive elements */
@@ -32,25 +73,6 @@ a {
 
 a:hover {
   color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-  /* Use CSS variable for mobile height */
-  min-height: calc(var(--vh, 1vh) * 100);
-  
-  /* Prevent overscroll/bounce effect on mobile */
-  overscroll-behavior: none;
-  
-  /* Prevent content from being hidden under mobile browser UI */
-  padding-bottom: env(safe-area-inset-bottom);
-  padding-top: env(safe-area-inset-top);
-  padding-left: env(safe-area-inset-left);
-  padding-right: env(safe-area-inset-right);
 }
 
 h1 {
@@ -93,6 +115,25 @@ button:focus-visible {
   padding: 2rem;
   text-align: center;
   width: 100%;
+  box-sizing: border-box;
+}
+
+.portfolio {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+section {
+  padding: 5rem 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Improved mobile responsiveness */
@@ -102,16 +143,30 @@ button:focus-visible {
   }
   
   .card {
-    padding: 1em;
+    padding: 0.7em;
+    box-shadow: none;
   }
   
   #app {
-    padding: 1rem;
+    padding: 0.5rem;
+    width: 100%;
+  }
+  
+  .portfolio {
+    padding: 0 0.5rem;
+    width: 100%;
+  }
+  
+  section {
+    padding: 1.5rem 0;
+    min-height: calc(100vh - var(--mobile-header-height));
+    width: 100%;
+    box-shadow: none;
   }
   
   /* Optimize font size for mobile */
   body {
-    font-size: 16px; /* Best size for mobile readability */
+    font-size: 17px;
   }
   
   /* Prevent input zooming */

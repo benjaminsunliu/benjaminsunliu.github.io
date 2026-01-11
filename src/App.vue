@@ -50,18 +50,31 @@ onMounted(() => {
 
 <style>
 :root {
-  --primary: #3498db;
-  --secondary: #2ecc71;
-  --dark: #2c3e50;
-  --light: #f5f5f5;
-  --accent: #e74c3c;
-  --text: #333333;
-  --text-light: #666666;
-  --border-radius: 8px;
+  /* Tech/Code Theme Colors */
+  --primary: #00ff41; /* Matrix green */
+  --secondary: #00d4ff; /* Cyan */
+  --accent: #ff0080; /* Neon pink */
+  --dark: #0a0a0a; /* Deep black */
+  --darker: #000000; /* Pure black */
+  --light: #1a1a1a; /* Dark gray */
+  --lighter: #2a2a2a; /* Medium gray */
+  --text: #e0e0e0; /* Light gray text */
+  --text-light: #888888; /* Muted text */
+  --text-dark: #ffffff; /* White text */
+  --border-radius: 4px; /* Sharp corners like code */
   --transition: all 0.3s ease;
   --header-height: 70px;
   --mobile-header-height: 60px;
   --content-padding-mobile: 16px;
+  
+  /* Code editor inspired colors */
+  --code-bg: #1e1e1e;
+  --code-border: #333333;
+  --code-highlight: #2d2d2d;
+  --terminal-green: #00ff41;
+  --terminal-blue: #00d4ff;
+  --terminal-pink: #ff0080;
+  --terminal-yellow: #ffff00;
 }
 
 html {
@@ -76,10 +89,12 @@ html {
 }
 
 body {
-  font-family: 'Inter', 'Avenir', Helvetica, Arial, sans-serif;
-  background-color: var(--light);
+  font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', 'Monaco', 'Courier New', monospace;
+  background-color: var(--dark);
   color: var(--text);
   line-height: 1.6;
+  background-image: linear-gradient(135deg, #181c1f 0%, #232b33 100%);
+  background-size: cover;
 }
 
 .portfolio {
@@ -94,21 +109,27 @@ section {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  position: relative;
+  /* Removed grid pattern overlay for smoother look */
+  background: transparent;
+  box-shadow: none;
 }
 
 h1, h2, h3, h4 {
   margin-bottom: 1rem;
   line-height: 1.2;
+  font-weight: 600;
 }
 
 h1 {
   font-size: 3rem;
+  text-shadow: 0 0 10px var(--primary);
 }
 
 h2 {
   font-size: 2.5rem;
   margin-bottom: 2rem;
-  color: var(--dark);
+  color: var(--text-dark);
   position: relative;
 }
 
@@ -119,7 +140,8 @@ h2::after {
   bottom: -0.5rem;
   width: 60px;
   height: 4px;
-  background-color: var(--primary);
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  box-shadow: 0 0 10px var(--primary);
 }
 
 p {
@@ -129,33 +151,93 @@ p {
 .btn {
   display: inline-block;
   padding: 0.8rem 1.5rem;
-  background-color: var(--primary);
-  color: white;
+  background: linear-gradient(45deg, var(--primary), var(--secondary));
+  color: var(--darker);
   border-radius: var(--border-radius);
   text-decoration: none;
   font-weight: 600;
   transition: var(--transition);
   cursor: pointer;
   border: none;
+  position: relative;
+  overflow: hidden;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.9rem;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s;
+}
+
+.btn:hover::before {
+  left: 100%;
 }
 
 .btn:hover {
-  background-color: var(--accent);
   transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 255, 65, 0.4);
 }
 
-/* Mobile-specific styles */
+.card {
+  background: var(--code-bg);
+  border: 1px solid var(--code-border);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+  box-shadow: none;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+}
+
+ul, ol {
+  list-style: none;
+}
+
+ul li::before {
+  content: '> ';
+  color: var(--primary);
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
 .is-mobile .btn {
-  /* Larger touch target for mobile */
   padding: 0.9rem 1.6rem;
 }
 
-/* Optimize scrolling performance */
 .is-scrolling * {
   pointer-events: none;
 }
 
-/* Media Queries for Mobile Responsiveness */
+@keyframes glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
+
+h1:hover {
+  animation: glitch 0.3s ease-in-out;
+}
+
 @media (max-width: 768px) {
   html {
     scroll-padding-top: var(--mobile-header-height);
@@ -175,52 +257,65 @@ p {
   }
   
   section {
-    padding: 3rem 0;
+    padding: 1.5rem 0;
     min-height: calc(100vh - var(--mobile-header-height));
+    background: transparent;
+    box-shadow: none;
   }
   
   .portfolio {
     padding: 0 var(--content-padding-mobile);
   }
   
-  /* Improve tap targets */
   a, button, input, select, textarea {
     min-height: 44px;
     min-width: 44px;
   }
   
-  /* Better handling for images on mobile */
   img {
     max-width: 100%;
     height: auto;
   }
   
-  /* Improve form fields on mobile */
   input, textarea, select {
-    font-size: 16px; /* Prevents zoom on iOS */
-    padding: 12px;
-    margin-bottom: 16px;
-    border-radius: var(--border-radius);
+    font-size: 16px;
   }
 }
 
-/* Optimize for smaller phones */
-@media (max-width: 480px) {
-  h1 {
-    font-size: 2rem;
-  }
-  
-  h2 {
-    font-size: 1.75rem;
-  }
-  
-  p {
-    font-size: 0.95rem;
-  }
-  
-  .btn {
-    padding: 0.75rem 1.3rem;
-    font-size: 0.95rem;
-  }
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+.cursor {
+  animation: blink 1s infinite;
+}
+
+.neon-glow {
+  text-shadow: 
+    0 0 5px currentColor,
+    0 0 10px currentColor,
+    0 0 15px currentColor,
+    0 0 20px currentColor;
+}
+
+.code-block {
+  background: var(--code-bg);
+  border: 1px solid var(--code-border);
+  border-radius: var(--border-radius);
+  padding: 1rem;
+  font-family: 'JetBrains Mono', monospace;
+  position: relative;
+  overflow-x: auto;
+}
+
+.code-block::before {
+  content: '// Code';
+  position: absolute;
+  top: 0.5rem;
+  right: 1rem;
+  font-size: 0.8rem;
+  color: var(--text-light);
+  opacity: 0.7;
 }
 </style>

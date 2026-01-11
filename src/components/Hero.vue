@@ -55,6 +55,7 @@ const resumeLink = '/LIUB_CV_DevOps.pdf';
         <div class="hero-actions">
           <a :href="resumeLink" target="_blank" class="btn">View Resume</a>
           <a href="#" @click.prevent="handleScrollIndicatorClick('projects')" class="btn btn-secondary">View My Work</a>
+          <a target="_blank" href="https://bensliu.ca/ObsiQuartz/" class="btn btn-secondary btn-digital">Digital Garden</a>
         </div>
         <div class="social-links">
           <a href="https://www.linkedin.com/in/benjamin-sliu/" aria-label="LinkedIn" title="LinkedIn">
@@ -107,25 +108,38 @@ const resumeLink = '/LIUB_CV_DevOps.pdf';
 
 .greeting {
   font-size: 1.5rem;
-  color: var(--primary);
+  color: var(--terminal-blue);
   margin-bottom: 0.5rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
 
 h1 {
   font-size: 4rem;
   font-weight: 800;
   margin: 0;
-  background-image: linear-gradient(to right, var(--primary), var(--secondary));
+  background: linear-gradient(45deg, var(--terminal-green), var(--terminal-blue));
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
+  text-shadow: 0 0 20px var(--terminal-green);
+  position: relative;
+}
+
+h1::after {
+  content: '_';
+  color: var(--terminal-green);
+  animation: blink 1s infinite;
+  margin-left: 0.2rem;
 }
 
 .title {
   font-size: 2.5rem;
   font-weight: 600;
   margin: 0.5rem 0 1rem;
-  color: var(--dark);
+  color: var(--text-dark);
+  text-shadow: 0 0 10px var(--terminal-blue);
 }
 
 .bio {
@@ -133,6 +147,8 @@ h1 {
   margin-bottom: 2rem;
   max-width: 600px;
   color: var(--text-light);
+  font-family: 'JetBrains Mono', monospace;
+  line-height: 1.8;
 }
 
 .hero-actions {
@@ -142,14 +158,21 @@ h1 {
 }
 
 .btn-secondary {
-  background-color: transparent;
-  color: var(--primary);
-  border: 2px solid var(--primary);
+  background: transparent;
+  color: var(--terminal-green);
+  border: 2px solid var(--terminal-green);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-secondary::before {
+  background: linear-gradient(90deg, transparent, rgba(0, 255, 65, 0.3), transparent);
 }
 
 .btn-secondary:hover {
-  background-color: var(--primary);
-  color: white;
+  background: var(--terminal-green);
+  color: var(--darker);
+  box-shadow: 0 5px 15px rgba(0, 255, 65, 0.6);
 }
 
 .social-links {
@@ -158,13 +181,18 @@ h1 {
 }
 
 .social-links a {
-  color: var(--dark);
+  color: var(--text-light);
   transition: var(--transition);
+  padding: 0.5rem;
+  border-radius: var(--border-radius);
+  border: 1px solid transparent;
 }
 
 .social-links a:hover {
-  color: var(--primary);
+  color: var(--terminal-green);
   transform: translateY(-3px);
+  border-color: var(--terminal-green);
+  box-shadow: 0 0 15px rgba(0, 255, 65, 0.5);
 }
 
 .hero-image {
@@ -178,19 +206,47 @@ h1 {
   width: 300px;
   height: 300px;
   border-radius: 50%;
-  background-color: #e0e0e0;
+  background: var(--code-bg);
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
   overflow: hidden;
+  border: 3px solid var(--terminal-green);
+  box-shadow: 
+    0 0 20px rgba(0, 255, 65, 0.5),
+    inset 0 0 20px rgba(0, 255, 65, 0.1);
 }
 
-.image-placeholder svg {
-  width: 50%;
-  height: 50%;
-  color: white;
-  z-index: 1;
+.image-placeholder::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    from 0deg,
+    transparent,
+    var(--terminal-green),
+    transparent,
+    var(--terminal-blue),
+    transparent
+  );
+  animation: rotate 4s linear infinite;
+  opacity: 0.3;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.image-placeholder img {
+  border-radius: 50%;
+  z-index: 2;
+  position: relative;
+  border: 2px solid var(--code-border);
 }
 
 .scroll-indicator {
@@ -198,23 +254,33 @@ h1 {
   bottom: 2rem;
   left: 50%;
   transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .scroll-indicator a {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.3rem;
+  color: var(--terminal-green);
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.scroll-indicator a:hover {
+  color: var(--terminal-blue);
+  transform: translateY(-5px);
 }
 
 .scroll-indicator span {
-  display: block;
-  width: 10px;
-  height: 10px;
-  border-bottom: 2px solid var(--primary);
-  border-right: 2px solid var(--primary);
-  transform: rotate(45deg);
-  animation: scrollIndicator 2s infinite;
+  width: 3px;
+  height: 20px;
+  background: var(--terminal-green);
+  margin: 2px 0;
+  animation: scroll-bounce 2s infinite;
+  box-shadow: 0 0 10px var(--terminal-green);
 }
 
 .scroll-indicator span:nth-child(2) {
@@ -225,61 +291,77 @@ h1 {
   animation-delay: 0.4s;
 }
 
-@keyframes scrollIndicator {
-  0% {
-    opacity: 0;
-    transform: rotate(45deg) translate(-5px, -5px);
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-    transform: rotate(45deg) translate(5px, 5px);
-  }
+@keyframes scroll-bounce {
+  0%, 100% { transform: scaleY(1); opacity: 1; }
+  50% { transform: scaleY(1.5); opacity: 0.7; }
 }
 
 .scroll-indicator.clicked span {
-  animation-play-state: paused;
-  opacity: 1;
-  transform: rotate(45deg) translate(0, 0);
+  animation: none;
+  transform: scaleY(0.5);
+  opacity: 0.5;
 }
 
-.scroll-indicator.clicked {
-  animation: bounce 0.5s ease;
+/* Terminal-style typing effect */
+.typing-effect {
+  overflow: hidden;
+  border-right: 2px solid var(--terminal-green);
+  white-space: nowrap;
+  animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
 }
 
-@keyframes bounce {
-  0% { transform: translateX(-50%) translateY(0); }
-  50% { transform: translateX(-50%) translateY(-10px); }
-  100% { transform: translateX(-50%) translateY(0); }
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
 }
 
+@keyframes blink-caret {
+  from, to { border-color: transparent; }
+  50% { border-color: var(--terminal-green); }
+}
+
+/* Responsive design */
 @media (max-width: 768px) {
   .hero-content {
     flex-direction: column-reverse;
     text-align: center;
+    align-items: center;
+    gap: 1.5rem;
   }
-
-  h1 {
-    font-size: 3rem;
-  }
-
-  .title {
-    font-size: 2rem;
-  }
-
-  .hero-actions {
+  .hero-image {
+    width: 100%;
+    display: flex;
     justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
   }
-
-  .social-links {
-    justify-content: center;
+  .image-placeholder {
+    width: 160px;
+    height: 160px;
+    min-width: 120px;
+    min-height: 120px;
+    max-width: 200px;
+    max-height: 200px;
   }
-
-  h2::after {
-    left: 50%;
-    transform: translateX(-50%);
+  .hero-text {
+    width: 100%;
+    margin: 0 auto;
   }
 }
-</style> 
+.btn-digital {
+  border-color: var(--terminal-blue);
+  color: var(--terminal-blue);
+  font-weight: 600;
+  font-family: 'JetBrains Mono', monospace;
+  background: rgba(0, 174, 255, 0.05);
+  box-shadow: 0 0 10px rgba(0, 174, 255, 0.3);
+}
+
+.btn-digital:hover {
+  background: var(--terminal-blue);
+  color: #000;
+  box-shadow: 0 0 15px rgba(0, 174, 255, 0.6);
+  transform: scale(1.05);
+  transition: all 0.3s ease;
+}
+</style>

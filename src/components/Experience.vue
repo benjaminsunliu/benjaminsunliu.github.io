@@ -90,34 +90,56 @@ const experiences = [
 <style scoped>
 .experience {
   padding: 6rem 0;
+  background: transparent;
+  position: relative;
+  box-shadow: none;
+}
+
+.experience::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(circle at 20% 30%, rgba(0, 212, 255, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(255, 0, 128, 0.05) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
 }
 
 .section-header {
   text-align: center;
   margin-bottom: 4rem;
+  position: relative;
+  z-index: 1;
 }
 
 .section-header p {
   color: var(--text-light);
   font-size: 1.2rem;
+  font-family: 'JetBrains Mono', monospace;
 }
 
 .timeline {
   position: relative;
   max-width: 1000px;
   margin: 0 auto;
+  z-index: 1;
 }
 
 .timeline::after {
   content: '';
   position: absolute;
   width: 4px;
-  background-color: var(--primary);
+  background: linear-gradient(to bottom, var(--terminal-green), var(--terminal-blue), var(--terminal-pink));
   top: 0;
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
   border-radius: 2px;
+  box-shadow: 0 0 10px var(--terminal-green);
 }
 
 .timeline-item {
@@ -133,11 +155,19 @@ const experiences = [
   width: 20px;
   height: 20px;
   right: -10px;
-  background-color: var(--light);
-  border: 4px solid var(--primary);
+  background: var(--terminal-green);
+  border: 4px solid var(--code-bg);
   border-radius: 50%;
   top: 15px;
   z-index: 1;
+  box-shadow: 0 0 15px var(--terminal-green);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 15px var(--terminal-green); }
+  50% { box-shadow: 0 0 25px var(--terminal-green), 0 0 35px var(--terminal-green); }
+  100% { box-shadow: 0 0 15px var(--terminal-green); }
 }
 
 .timeline-item.left {
@@ -154,15 +184,29 @@ const experiences = [
 
 .timeline-content {
   padding: 25px;
-  background-color: white;
+  background: var(--code-bg);
+  border: 1px solid var(--code-border);
   border-radius: var(--border-radius);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.timeline-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--terminal-green), var(--terminal-blue));
+  z-index: 2;
 }
 
 .timeline-content:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  border-color: var(--terminal-green);
+  box-shadow: 0 10px 30px rgba(0, 255, 65, 0.2);
 }
 
 .timeline-header {
@@ -171,7 +215,10 @@ const experiences = [
 
 .timeline-header h3 {
   margin-bottom: 0.5rem;
-  color: var(--primary);
+  color: var(--terminal-green);
+  font-family: 'JetBrains Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .company {
@@ -180,20 +227,23 @@ const experiences = [
 
 .company-name {
   font-weight: 600;
+  color: var(--text-dark);
 }
 
 .separator {
   margin: 0 0.5rem;
-  color: var(--text-light);
+  color: var(--terminal-blue);
 }
 
 .location, .period {
   color: var(--text-light);
   font-size: 0.9rem;
+  font-family: 'JetBrains Mono', monospace;
 }
 
 .period {
   font-style: italic;
+  color: var(--terminal-pink);
 }
 
 .timeline-body ul {
@@ -202,11 +252,18 @@ const experiences = [
 }
 
 .timeline-body li {
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.5rem;
+  color: var(--text);
+  line-height: 1.6;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
 }
 
-.timeline-body li:last-child {
-  margin-bottom: 0;
+.timeline-body li::before {
+  content: '> ';
+  color: var(--terminal-green);
+  font-weight: bold;
+  margin-right: 0.5rem;
 }
 
 .skills {
@@ -217,31 +274,89 @@ const experiences = [
 
 .skill-tag {
   padding: 0.3rem 0.8rem;
-  background-color: var(--light);
-  border-radius: 30px;
+  background: var(--lighter);
+  border: 1px solid var(--code-border);
+  border-radius: var(--border-radius);
   font-size: 0.8rem;
-  font-weight: 500;
-  color: var(--text);
+  color: var(--terminal-blue);
+  font-family: 'JetBrains Mono', monospace;
+  transition: var(--transition);
 }
 
+.skill-tag:hover {
+  background: var(--terminal-blue);
+  color: var(--darker);
+  border-color: var(--terminal-blue);
+  box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+}
+
+/* Terminal-style loading animation */
+@keyframes slide-in-left {
+  0% { opacity: 0; transform: translateX(-50px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slide-in-right {
+  0% { opacity: 0; transform: translateX(50px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+.timeline-item.left .timeline-content {
+  animation: slide-in-left 0.6s ease-out;
+}
+
+.timeline-item.right .timeline-content {
+  animation: slide-in-right 0.6s ease-out;
+}
+
+.timeline-item:nth-child(1) .timeline-content { animation-delay: 0.1s; }
+.timeline-item:nth-child(2) .timeline-content { animation-delay: 0.2s; }
+
+/* Responsive design */
 @media (max-width: 768px) {
+  .experience {
+    padding: 2rem 0;
+    box-shadow: none;
+    background: transparent !important;
+  }
+  
   .timeline::after {
-    left: 31px;
+    left: 20px;
   }
   
   .timeline-item {
     width: 100%;
-    padding-left: 70px;
-    padding-right: 15px;
+    padding-left: 30px;
+    padding-right: 10px;
+    margin-bottom: 2rem;
   }
   
+  .timeline-item.left,
   .timeline-item.right {
     left: 0;
   }
   
   .timeline-item::after {
-    left: 21px;
+    left: -30px;
     right: auto;
+  }
+  
+  .timeline-content {
+    box-shadow: none;
+    border-width: 1px;
+  }
+  
+  .timeline-header h3 {
+    font-size: 1.1rem;
+  }
+  
+  .skills {
+    gap: 0.3rem;
+  }
+  
+  .skill-tag {
+    padding: 0.25rem 0.6rem;
+    font-size: 0.75rem;
   }
 }
 </style> 
