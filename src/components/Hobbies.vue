@@ -42,6 +42,13 @@ const hobbies = [
     description: "I'm fascinated by aquascaping and freshwater aquarium care. I enjoy maintaining a planted tank, experimenting with CO₂ injection, and optimizing water parameters to support healthy fish and plant life.",
     image: '/hobby3.jpg' 
   },
+  {
+    id: 4,
+    name: 'Music',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="3"></circle><path d="M5 7h2a2 2 0 0 0 2-2 1 1 0 0 1 1-1h4a1 1 0 0 1 1 1 2 2 0 0 0 2 2h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2"></path></svg>`,
+    description: "Music is both a creative outlet and a way for me to recharge. I have played piano and violin since childhood, exploring styles ranging from classical to jazz through repertoire study, improvisation, and ensemble performance. I have performed in numerous concerts and recitals, including with the Mount Royal Youth Orchestra, under the guidance of instructors from the McGill Conservatory and the Royal Conservatory of Music. I have completed Level 8 Theory and the Level 8 Violin examination from the Royal Conservatory of Music.",
+    image: '/music.png'
+  }
 ];
 
 

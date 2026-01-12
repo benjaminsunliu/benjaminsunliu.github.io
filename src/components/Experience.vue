@@ -22,6 +22,17 @@ onMounted(() => {
 const experiences = [
   {
     id: 1,
+    title: 'Software Developer R&D Intern',
+    company: 'Genetec Inc.',
+    period: 'September 2025 - December 2025',
+    location: 'Montreal, QC',
+    description: [
+      'AutoVu Sharp 🚗',
+    ],
+    skills: ['C#', 'ASP.NET',  'React', 'TypeScript', 'Azure', 'Agile Methodologies', 'Code Reviews']
+  },
+  {
+    id: 2,
     title: 'Outreach Officer / Developer',
     company: 'Regroupement des éco-quartiers',
     period: 'Jun 2023 - Present',
@@ -40,7 +51,7 @@ const experiences = [
   {
     id: 2,
     title: 'Kitchen Staff',
-    company: 'Le Warehouse',
+    company: 'Warehouse Group',
     period: 'Jun 2022 - Aug 2022',
     location: 'Montreal, QC',
     description: [

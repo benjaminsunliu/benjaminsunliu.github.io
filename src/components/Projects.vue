@@ -45,17 +45,39 @@ const projects = [
   },
   {
     id: 3,
-    title: 'Peer Assessment Platform',
+    title: 'RateMyChillmates: Peer Evaluation Platform',
     description: 'A platform for students to provide structured feedback on individual and group contributions in collaborative projects, fostering accountability and self-reflection.',
     image: '/ratemychillmates.png',
     technologies: ['Agile Methodologies', 'Unit Testing', 'CI/CD', 'Code Review', 'React', 'Node.JS', 'MongoDB'],
     category: 'web',
     demoLink: '/SOEN 341 Presentation .pdf',
-    codeLink: 'https://github.com/benjaminsunliu/Group6-SOEN341_Project_F24',
+    codeLink: 'https://github.com/benjaminsunliu/RateMyChillmates',
     featured: false
   },
   {
     id: 4,
+    title: 'McHacks12: EchoBrief Live Meeting Summarizer',
+    description: 'Built a real-time audio transcription and summarization web app that records live speech, streams transcripts, and generates structured summaries with action items and key points. Integrated live speech-to-text, SSE streaming, and AI-powered summarization to streamline note-taking for lectures and meetings.',
+    image: '/echobrief.JPG',
+    technologies: ['Google Cloud Platform', 'React', 'Node.js', 'Express.js', 'OpenAI API'],
+    category: 'ai',
+    demoLink: 'https://devpost.com/software/echobrief',
+    codeLink: 'https://github.com/benjaminsunliu/EchoBrief',
+    featured: false
+  },
+  {
+    id: 5,
+    title: 'RoboHacks2024: Arduino SeaScooper',
+    description: 'Developed and pitched a prototype concept as a full business proposal addressing marine pollution, aligned with the UN Sustainable Development Goals. Earned 2nd place for a sustainability-driven solution combining environmental impact, technical feasibility, and scalability.',
+    image: '/seascooper.jpeg',
+    technologies: ['Arduino', 'Sensors', 'Mechanical Design', 'Business Proposal', 'UN SDGs'],
+    category: 'robotics',
+    demoLink: 'https://www.youtube.com/watch?v=kaa7bNEnGvk',
+    codeLink: 'https://github.com/benjaminsunliu',
+    featured: false
+  },
+  {
+    id: 5,
     title: 'Art Advisory Institution System',
     description: 'A platform designed to facilitate consulting services for art advisory institutions, enabling experts to manage availability, clients to request consultations, and administrators to oversee auctions, viewings, and service requests efficiently.',
     image: '/art.png',
@@ -66,7 +88,7 @@ const projects = [
     featured: false
   },
   {
-    id: 5,
+    id: 6,
     title: 'TerraQuest',
     description: 'An interactive learning game that challenges players to make strategic environmental decisions in scenarios like sustainable mining, ocean conservation, and space resource management, with AI-driven outcomes and immersive 3D animations.',
     image: '/terraquest.png',
@@ -77,7 +99,7 @@ const projects = [
     featured: false
   },
   {
-    id: 5,
+    id: 7,
     title: 'CodePaws',
     description: ' A pet adoption platform where users can create accounts, list pets for adoption, and browse available pets, with secure login, user session management, and pet listing functionality.',
     image: '/codepaws.png',

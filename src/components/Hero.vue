@@ -41,7 +41,7 @@ const handleScrollIndicatorClick = (sectionId) => {
 const name = 'Benjamin Liu';
 const title = 'Software Engineering Student';
 const shortBio = 'Passionate about creating elegant solutions to complex problems';
-const resumeLink = '/LIUB_CV_DevOps.pdf'; 
+
 </script>
 
 <template>
@@ -53,7 +53,6 @@ const resumeLink = '/LIUB_CV_DevOps.pdf';
         <h2 class="title">{{ title }}</h2>
         <p class="bio">{{ shortBio }}</p>
         <div class="hero-actions">
-          <a :href="resumeLink" target="_blank" class="btn">View Resume</a>
           <a href="#" @click.prevent="handleScrollIndicatorClick('projects')" class="btn btn-secondary">View My Work</a>
           <a target="_blank" href="https://bensliu.ca/ObsiQuartz/" class="btn btn-secondary btn-digital">Digital Garden</a>
         </div>
@@ -63,6 +62,12 @@ const resumeLink = '/LIUB_CV_DevOps.pdf';
           </a>
           <a href="https://github.com/benjaminsunliu" aria-label="GitHub" title="GitHub">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+          </a>
+          <a href="https://www.youtube.com/@benjaminsliu/featured" aria-label="YouTube" title="YouTube">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          </a>
+          <a href="https://www.strava.com/athletes/44787997" aria-label="Strava" title="Strava">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.598h4.172L10.463 0l-7 13.828h4.169"/></svg>
           </a>
         </div>
       </div>
