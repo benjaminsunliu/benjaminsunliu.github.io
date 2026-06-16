@@ -1,11 +1,16 @@
 import { createApp } from 'vue'
 import './style.css'
 import App from './App.vue'
+import { tilt, reveal } from './directives.js'
 
 // Mobile device detection
 const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
 const app = createApp(App)
+
+// Global directives
+app.directive('tilt', tilt)
+app.directive('reveal', reveal)
 
 // Pass mobile detection to the app
 app.config.globalProperties.$isMobile = isMobile;

@@ -1,17 +1,17 @@
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
+  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.6;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #181c1f;
+  color-scheme: dark;
+  color: rgba(233, 236, 248, 0.92);
+  background-color: #04060f;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  
+
   /* Mobile viewport height variable */
   --vh: 1vh;
 }
@@ -19,6 +19,7 @@
 html {
   min-height: 100vh;
   height: 100%;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -32,29 +33,7 @@ body {
   padding-right: env(safe-area-inset-right);
   width: 100%;
   box-sizing: border-box;
-  /* Remove background-image here for mobile, handled by ::before */
-}
-
-body::before {
-  content: '';
-  position: fixed;
-  z-index: -1;
-  top: 0; left: 0; right: 0; bottom: 0;
-  width: 100vw;
-  height: 100vh;
-  background: linear-gradient(135deg, #181c1f 0%, #232b33 100%);
-  background-size: cover;
-  background-repeat: no-repeat;
-  pointer-events: none;
-}
-
-@media (min-width: 769px) {
-  html, body {
-    background-attachment: fixed;
-    background-image: linear-gradient(135deg, #181c1f 0%, #232b33 100%);
-    background-size: cover;
-    background-repeat: no-repeat;
-  }
+  background-color: #04060f;
 }
 
 /* Improved touchable area for interactive elements */
@@ -64,115 +43,16 @@ a, button, input, select, textarea {
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: inherit;
   text-decoration: inherit;
-  /* Increase tap target size for mobile */
-  padding: 0.15rem;
   display: inline-block;
 }
 
-a:hover {
-  color: #535bf2;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-  
-  /* Increase tap target size for mobile */
-  min-height: 44px;
-  min-width: 44px;
-}
-
-button:hover {
-  border-color: #646cff;
-}
-
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-.card {
-  padding: 2em;
-}
-
 #app {
-  max-width: 1280px;
+  max-width: 100%;
   margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
   width: 100%;
   box-sizing: border-box;
-}
-
-.portfolio {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-section {
-  padding: 5rem 0;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-/* Improved mobile responsiveness */
-@media (max-width: 768px) {
-  h1 {
-    font-size: 2.2em;
-  }
-  
-  .card {
-    padding: 0.7em;
-    box-shadow: none;
-  }
-  
-  #app {
-    padding: 0.5rem;
-    width: 100%;
-  }
-  
-  .portfolio {
-    padding: 0 0.5rem;
-    width: 100%;
-  }
-  
-  section {
-    padding: 1.5rem 0;
-    min-height: calc(100vh - var(--mobile-header-height));
-    width: 100%;
-    box-shadow: none;
-  }
-  
-  /* Optimize font size for mobile */
-  body {
-    font-size: 17px;
-  }
-  
-  /* Prevent input zooming */
-  input, select, textarea {
-    font-size: 16px;
-  }
 }
 
 /* Fix for iOS Safari 100vh issue */
@@ -182,15 +62,11 @@ section {
   }
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+@media (max-width: 768px) {
+  body {
+    font-size: 16px;
   }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
+  input, select, textarea {
+    font-size: 16px;
   }
 }
