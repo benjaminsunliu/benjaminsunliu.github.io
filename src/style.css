@@ -27,10 +27,9 @@ body {
   min-height: 100vh;
   height: 100%;
   overscroll-behavior: none;
-  padding-bottom: env(safe-area-inset-bottom);
-  padding-top: env(safe-area-inset-top);
-  padding-left: env(safe-area-inset-left);
-  padding-right: env(safe-area-inset-right);
+  /* Safe-area insets are applied to the fixed header and footer instead of
+     body padding, which would otherwise leave a bar of bare body background
+     in the home-indicator area on iOS. */
   width: 100%;
   box-sizing: border-box;
   background-color: #04060f;

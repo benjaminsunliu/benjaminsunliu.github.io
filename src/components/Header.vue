@@ -135,7 +135,7 @@ header {
   width: 100%;
   z-index: 1000;
   transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), padding 0.3s ease;
-  padding: 1.2rem 0;
+  padding: calc(1.2rem + env(safe-area-inset-top)) 0 1.2rem;
 }
 
 header::before {
@@ -156,7 +156,7 @@ header.scrolled::before {
   border-bottom: 1px solid var(--glass-border);
 }
 
-header.scrolled { padding: 0.7rem 0; }
+header.scrolled { padding: calc(0.7rem + env(safe-area-inset-top)) 0 0.7rem; }
 
 header.header-hidden { transform: translateY(-110%); }
 

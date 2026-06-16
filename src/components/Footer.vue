@@ -82,7 +82,7 @@ const contactInfo = {
 <style scoped>
 .footer {
   position: relative;
-  padding: 6rem 0 2.5rem;
+  padding: 6rem 0 calc(2.5rem + env(safe-area-inset-bottom));
   margin-top: 4rem;
   overflow: hidden;
 }

@@ -320,6 +320,7 @@ const shortBio = 'Software engineering student crafting elegant solutions to com
 .scroll-indicator.clicked .wheel { animation: none; }
 
 @media (max-width: 900px) {
+  .scroll-indicator { display: none; }
   .hero-content {
     flex-direction: column-reverse;
     text-align: center;
