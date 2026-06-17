@@ -8,7 +8,7 @@ A glassmorphism portfolio with a hidden operating system inside it.
 
 [![Vue 3](https://img.shields.io/badge/Vue-3-42b883?logo=vue.js&logoColor=white)](https://vuejs.org/)
 [![Vite](https://img.shields.io/badge/Vite-6-646cff?logo=vite&logoColor=white)](https://vitejs.dev/)
-[![Deploy](https://img.shields.io/badge/GitHub_Pages-live-181717?logo=github&logoColor=white)](https://bensliu.ca)
+[![Deploy](https://img.shields.io/badge/GitHub_Pages-live-181717?logo=github&logoColor=white)](benjaminsunliu.github.io)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 </div>
@@ -17,7 +17,7 @@ A glassmorphism portfolio with a hidden operating system inside it.
 
 ## What this is
 
-My personal site, built from scratch as a single-page Vue app. The visible layer is a polished dark, frosted-glass portfolio — experience, projects, education, hobbies. The hidden layer is **benjaminOS**, a desktop-and-terminal interface for the *same* content, unlocked with the Konami code.
+My personal site, built from scratch as a single-page Vue app. The visible layer is a polished dark, frosted-glass portfolio — experience, projects, education, hobbies. The hidden layer is **benjaminOS**, a desktop-and-terminal interface for the _same_ content, unlocked with the Konami code.
 
 Both layers read from one file (`src/data/portfolio.js`), so the portfolio and the OS never drift out of sync.
 
@@ -34,14 +34,14 @@ Both layers read from one file (`src/data/portfolio.js`), so the portfolio and t
 
 ## Tech stack
 
-| | |
-|---|---|
-| **Framework** | Vue 3 (`<script setup>` Composition API) |
-| **Build** | Vite 6 |
-| **Styling** | Hand-written CSS with design tokens (glass + surface palette) |
-| **Fonts** | Space Grotesk · Inter · JetBrains Mono |
-| **Analytics** | Cloudflare Web Analytics (cookieless) |
-| **Hosting** | GitHub Pages via GitHub Actions |
+|               |                                                               |
+| ------------- | ------------------------------------------------------------- |
+| **Framework** | Vue 3 (`<script setup>` Composition API)                      |
+| **Build**     | Vite 6                                                        |
+| **Styling**   | Hand-written CSS with design tokens (glass + surface palette) |
+| **Fonts**     | Space Grotesk · Inter · JetBrains Mono                        |
+| **Analytics** | Cloudflare Web Analytics (cookieless)                         |
+| **Hosting**   | GitHub Pages via GitHub Actions                               |
 
 No component libraries, no CSS frameworks — the glass, tilt, cursor, and OS are all custom.
 
