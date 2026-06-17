@@ -6,7 +6,7 @@ export const projects = [
   {
     id: 0,
     title: 'FraudFrog',
-    description: '🏆 Valsoft Challenge Winner at MPC Hacks - FraudFrog combines deterministic fraud scoring, per-card anomaly detection, cross-card fraud signals, AI-assisted case summaries, and a Tinder-inspired swipe review flow for fast transaction triage.',
+    description: '🏆 Valsoft Challenge Winner at MPC Hacks — FraudFrog combines deterministic fraud scoring, per-card anomaly detection, cross-card fraud signals, AI-assisted case summaries, and a Tinder-inspired swipe review flow for fast transaction triage.',
     image: '/fraudfrog.jpeg',
     technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'Python'],
     category: 'web',
@@ -17,7 +17,7 @@ export const projects = [
   {
     id: 2,
     title: 'Autonomous Arduino Firetruck',
-    description: '🏆 Collège Jean-de-Brébeuf Best Integration Project - An Arduino-powered autonomous firetruck that detects and navigates towards flames, integrating circuit design, mechanical assembly, and algorithm development.',
+    description: '🏆 Collège Jean-de-Brébeuf Best Integration Project — An Arduino-powered autonomous firetruck that detects and navigates towards flames, integrating circuit design, mechanical assembly, and algorithm development.',
     image: '/firetruck.jpg',
     technologies: ['Arduino', 'Algorithms', 'Mechanical Design', 'Circuits', 'Sensors'],
     category: 'robotics',
@@ -29,19 +29,19 @@ export const projects = [
   {
     id: 5,
     title: 'SeaScooper',
-    description: '🏆 RoboHacks 2024 Beaver Dam Challenge Runner Up - An Arduino prototype + full business proposal addressing marine pollution, aligned with the UN SDGs. Earned 2nd place at RoboHacks 2024.',
+    description: '🏆 2nd Place at RoboHacks 2024 Beaver Dam Challenge — SeaScooper is an Arduino-powered autonomous boat prototype designed to collect marine debris, backed by a sustainable business proposal for scalable ocean cleanup aligned with the UN SDGs.',
     image: '/seascooper.jpeg',
     technologies: ['Arduino', 'Sensors', 'Mechanical Design', 'UN SDGs'],
     category: 'robotics',
     winner: 'WINNER',
     demoLink: 'https://www.youtube.com/watch?v=kaa7bNEnGvk',
-    codeLink: 'https://github.com/benjaminsunliu',
+    codeLink: '/seascooper.pdf',
     featured: false
   },
   {
     id: 1,
     title: 'Patrouille Verte Mobile App',
-    description: '🌱 Designed, pitched, and developed a React Native mobile app idea for Regroupement des Éco-Quartiers to help Patrouille Verte streamline field data collection and management using Azure and Google Sheets API.',
+    description: '🌱 Designed, pitched, and developed a React Native mobile app idea for Regroupement des Éco-Quartiers to help field outreach officers streamline field data collection and management using Azure and Google Sheets API.',
     image: '/patrouille.png',
     technologies: ['React Native', 'Node.js', 'Azure', 'Google API'],
     category: 'mobile',

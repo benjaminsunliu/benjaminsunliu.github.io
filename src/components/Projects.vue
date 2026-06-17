@@ -2,9 +2,13 @@
 import { ref, onMounted, computed } from 'vue';
 import { projects, projectCategories as categories } from '../data/portfolio.js';
 
+// Projects shown before the "See more" button in the unfiltered view.
+const COLLAPSED_COUNT = 6;
+
 const emit = defineEmits(['visible']);
 const sectionRef = ref(null);
 const activeFilter = ref('all');
+const showAll = ref(false);
 
 onMounted(() => {
   const observer = new IntersectionObserver(
@@ -21,13 +25,50 @@ onMounted(() => {
   }
 });
 
+const isFiltered = computed(() => activeFilter.value !== 'all');
+
 const filteredProjects = computed(() => {
   if (activeFilter.value === 'all') return projects;
   return projects.filter(project => project.category === activeFilter.value);
 });
 
+// Collapse the unfiltered grid to the first few projects; a category
+// filter always shows every match.
+const visibleProjects = computed(() => {
+  if (isFiltered.value || showAll.value) return filteredProjects.value;
+  return filteredProjects.value.slice(0, COLLAPSED_COUNT);
+});
+
+const hiddenCount = computed(() =>
+  filteredProjects.value.length - COLLAPSED_COUNT
+);
+
+// Toggle is available whenever the unfiltered view has more than the
+// collapsed count; label/action depend on the current state.
+const canToggle = computed(() => !isFiltered.value && hiddenCount.value > 0);
+
+function collapse() {
+  showAll.value = false;
+  // Keep the section in view so collapsing doesn't strand the user far
+  // down the page.
+  sectionRef.value?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
 function setFilter(category) {
   activeFilter.value = category;
+  showAll.value = false;
+}
+
+// Pan via object-position (slides the crop, no gaps); expose zoom as a CSS var
+// so the hover rule can still layer its own scale on top.
+function imageVars(project) {
+  const t = project.imageTransform;
+  if (!t) return null;
+  const clamp = (n) => Math.min(100, Math.max(0, n));
+  return {
+    objectPosition: `${clamp(50 - (t.x ?? 0))}% ${clamp(50 - (t.y ?? 0))}%`,
+    '--img-zoom': t.zoom ?? 1
+  };
 }
 </script>
 
@@ -52,7 +93,7 @@ function setFilter(category) {
 
     <div class="project-grid">
       <div
-        v-for="(project, i) in filteredProjects"
+        v-for="(project, i) in visibleProjects"
         :key="project.id"
         class="glass-card project-card"
         :class="{ featured: project.featured }"
@@ -62,7 +103,7 @@ function setFilter(category) {
         <span v-if="project.featured" class="featured-badge">★ Featured</span>
         <div v-if="project.winner" class="winner-ribbon"><span>{{ project.winner }}</span></div>
         <div class="project-image">
-          <img :src="project.image" :alt="project.title" loading="lazy" />
+          <img :src="project.image" :alt="project.title" loading="lazy" :style="imageVars(project)" />
           <div class="project-overlay"></div>
           <div class="project-links">
             <a :href="project.demoLink" target="_blank" class="project-link" title="Live Demo" aria-label="Live demo">
@@ -81,6 +122,18 @@ function setFilter(category) {
           </div>
         </div>
       </div>
+    </div>
+
+    <div v-if="canToggle" class="see-more-wrap" v-reveal>
+      <button v-if="!showAll" class="see-more-btn" @click="showAll = true">
+        See more
+        <span class="see-more-count">+{{ hiddenCount }}</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </button>
+      <button v-else class="see-more-btn see-more-btn--less" @click="collapse">
+        Show less
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+      </button>
     </div>
   </section>
 </template>
@@ -208,6 +261,7 @@ function setFilter(category) {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transform: scale(var(--img-zoom, 1));
   transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -217,7 +271,9 @@ function setFilter(category) {
   background: linear-gradient(to top, rgba(7, 10, 23, 0.85), transparent 60%);
 }
 
-.project-card:hover .project-image img { transform: scale(1.07); }
+.project-card:hover .project-image img {
+  transform: scale(calc(var(--img-zoom, 1) * 1.07));
+}
 
 .project-links {
   position: absolute;
@@ -281,6 +337,44 @@ function setFilter(category) {
   display: flex;
   flex-wrap: wrap;
   gap: 0.45rem;
+}
+
+.see-more-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 2.5rem;
+}
+
+.see-more-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.75rem 1.6rem;
+  border-radius: 999px;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  cursor: pointer;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  color: var(--text);
+  transition: var(--transition);
+}
+
+.see-more-btn:hover {
+  border-color: var(--accent);
+  box-shadow: 0 10px 24px rgba(124, 140, 255, 0.25);
+  transform: translateY(-2px);
+}
+
+.see-more-btn:hover svg { transform: translateY(2px); }
+.see-more-btn--less:hover svg { transform: translateY(-2px); }
+.see-more-btn svg { transition: transform 0.25s ease; }
+
+.see-more-count {
+  font-size: 0.72rem;
+  color: var(--accent-2);
 }
 
 @media (max-width: 768px) {

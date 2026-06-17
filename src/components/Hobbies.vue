@@ -19,33 +19,53 @@ onMounted(() => {
   }
 });
 
+// imageTransform pans/zooms the card image within its frame, keeping it full:
+//   x, y  — shift the image as a % from center (negative y = up, negative x = left)
+//   zoom  — scale factor (1 = fit, >1 zooms in)
+// Panning slides the crop within the image, so it works at any zoom.
 const hobbies = [
   {
     id: 1,
     name: 'Cycling',
     description: "I love the thrill of cycling — navigating city streets, exploring scenic trails, and pushing my limits. My longest ride was a 152 km route along the lakeshore.",
-    image: '/hobby1.jpg'
+    image: '/hobby1.jpg',
+    imageTransform: { x: 0, y: -45, zoom: 1 }
   },
   {
     id: 2,
     name: 'Home Barista',
     description: "I'm passionate about the craft of espresso — dialing in shots, experimenting with beans and grind settings, and practicing latte art. A daily ritual of precision and creativity.",
-    image: '/hobby2.jpg'
+    image: '/hobby2.jpg',
+    imageTransform: { x: 0, y: 0, zoom: 1 }
   },
   {
     id: 3,
     name: 'Aquarium Keeping',
     description: "I'm fascinated by aquascaping and freshwater care — maintaining a planted tank, experimenting with CO₂ injection, and optimizing water parameters for healthy fish and plant life.",
     image: '/hobby3.jpg',
+    imageTransform: { x: 0, y: 0, zoom: 1 },
     egg: true
   },
   {
     id: 4,
     name: 'Music',
     description: "Piano and violin since childhood, from classical to jazz. I've performed with the Mount Royal Youth Orchestra and completed Level 8 Violin & Theory with the Royal Conservatory of Music.",
-    image: '/music.png'
+    image: '/music.png',
+    imageTransform: { x: 0, y: 0, zoom: 1.02 }
   }
 ];
+
+// Pan via object-position (slides the crop, no gaps); expose zoom as a CSS var
+// so the hover rule can still layer its own scale on top.
+function imageVars(item) {
+  const t = item.imageTransform;
+  if (!t) return null;
+  const clamp = (n) => Math.min(100, Math.max(0, n));
+  return {
+    objectPosition: `${clamp(50 - (t.x ?? 0))}% ${clamp(50 - (t.y ?? 0))}%`,
+    '--img-zoom': t.zoom ?? 1
+  };
+}
 
 function handleHobbyClick(hobby) {
   if (hobby.egg) {
@@ -74,7 +94,7 @@ function handleHobbyClick(hobby) {
         @click="handleHobbyClick(hobby)"
       >
         <div class="hobby-image">
-          <img :src="hobby.image" :alt="hobby.name" loading="lazy" />
+          <img :src="hobby.image" :alt="hobby.name" loading="lazy" :style="imageVars(hobby)" />
         </div>
         <div class="hobby-content">
           <h3>{{ hobby.name }}<span v-if="hobby.egg" class="hobby-hint">tap me 🐠</span></h3>
@@ -94,9 +114,9 @@ function handleHobbyClick(hobby) {
 <style scoped>
 .hobbies-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 1.6rem;
-  max-width: 1100px;
+  max-width: 900px;
   margin: 4rem auto 3.5rem;
 }
 
@@ -138,10 +158,13 @@ function handleHobbyClick(hobby) {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transform: scale(var(--img-zoom, 1));
   transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.hobby-card:hover .hobby-image img { transform: scale(1.07); }
+.hobby-card:hover .hobby-image img {
+  transform: scale(calc(var(--img-zoom, 1) * 1.07));
+}
 
 .hobby-content {
   padding: 1.4rem;
