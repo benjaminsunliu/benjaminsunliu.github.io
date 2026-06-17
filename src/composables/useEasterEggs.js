@@ -25,30 +25,38 @@ function toast(message) {
   }, 2600);
 }
 
-function spawnFish(count = 14) {
+function spawnFish() {
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reduce) return;
+
+  // Lighter school + smaller fish on phones so the animation stays smooth.
+  const mobile = window.matchMedia('(max-width: 768px)').matches;
+  const count = mobile ? 8 : 14;
+  const maxSize = mobile ? 2.4 : 4;
 
   const layer = document.createElement('div');
   layer.className = 'fish-layer';
   document.body.appendChild(layer);
 
+  let maxLife = 0;
   for (let i = 0; i < count; i++) {
     const fish = document.createElement('span');
     fish.className = 'fish';
     fish.textContent = FISH[Math.floor(Math.random() * FISH.length)];
-    const top = Math.random() * 90;
-    const size = 1.4 + Math.random() * 2.6;
+    const top = Math.random() * 88;
+    const size = 1.2 + Math.random() * (maxSize - 1.2);
     const duration = 6 + Math.random() * 6;
-    const delay = Math.random() * 3;
+    const delay = Math.random() * 2.5;
     fish.style.top = top + 'vh';
     fish.style.fontSize = size + 'rem';
     fish.style.animationDuration = duration + 's';
     fish.style.animationDelay = delay + 's';
     layer.appendChild(fish);
+    maxLife = Math.max(maxLife, duration + delay);
   }
 
-  setTimeout(() => layer.remove(), 16000);
+  // Remove only after the slowest fish has fully swum off-screen.
+  setTimeout(() => layer.remove(), (maxLife + 0.5) * 1000);
 }
 
 export function useEasterEggs() {

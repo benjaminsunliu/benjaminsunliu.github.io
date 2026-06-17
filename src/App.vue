@@ -205,6 +205,10 @@ h2 { font-size: clamp(2rem, 4vw, 3rem); }
   box-shadow: var(--glass-shadow);
   overflow: hidden;
   transition: var(--transition);
+  /* Keep a stable backing layer so card content isn't dropped during scroll
+     repaints (a backdrop-filter compositing glitch in Safari/Chromium). */
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 /* Top inner highlight — the "lit edge" of glass */
@@ -222,6 +226,7 @@ h2 { font-size: clamp(2rem, 4vw, 3rem); }
     rgba(255, 255, 255, 0.12)
   );
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   pointer-events: none;
@@ -240,7 +245,6 @@ h2 { font-size: clamp(2rem, 4vw, 3rem); }
 /* ---------- Tilt + glare ---------- */
 .tiltable {
   transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
-  transform-style: preserve-3d;
   transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
     box-shadow 0.4s, border-color 0.4s;
 }
@@ -273,7 +277,9 @@ h2 { font-size: clamp(2rem, 4vw, 3rem); }
 
 .reveal-in {
   opacity: 1;
-  transform: translateY(0);
+  /* Settle to no transform (not translateY(0)) so revealed cards don't leave a
+     lingering transform context around their backdrop-filter. */
+  transform: none;
 }
 
 /* ---------- Buttons ---------- */
@@ -457,19 +463,23 @@ h2 { font-size: clamp(2rem, 4vw, 3rem); }
 
 .fish {
   position: absolute;
-  left: -10vw;
+  left: -20vw;
   animation-name: swim;
   animation-timing-function: linear;
   animation-iteration-count: 1;
+  animation-fill-mode: both;
+  will-change: transform, opacity;
   filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.3));
 }
 
 @keyframes swim {
-  0% { transform: translateX(0) scaleX(1) translateY(0); }
-  25% { transform: translateX(30vw) scaleX(1) translateY(-3vh); }
-  50% { transform: translateX(60vw) scaleX(1) translateY(2vh); }
-  75% { transform: translateX(90vw) scaleX(1) translateY(-2vh); }
-  100% { transform: translateX(125vw) scaleX(1) translateY(0); }
+  0%   { transform: translateX(0) translateY(0); opacity: 0; }
+  6%   { opacity: 1; }
+  25%  { transform: translateX(35vw) translateY(-3vh); }
+  50%  { transform: translateX(70vw) translateY(2vh); }
+  75%  { transform: translateX(105vw) translateY(-2vh); }
+  94%  { opacity: 1; }
+  100% { transform: translateX(145vw) translateY(0); opacity: 0; }
 }
 
 /* ---------- benjaminOS desktop (Konami) ---------- */

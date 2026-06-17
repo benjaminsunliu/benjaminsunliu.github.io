@@ -74,10 +74,16 @@ onMounted(() => {
   content: '';
   position: absolute;
   left: 7px;
-  top: 6px;
+  top: 0;
   bottom: 6px;
   width: 2px;
-  background: linear-gradient(to bottom, var(--accent), var(--accent-2), transparent);
+  background: linear-gradient(
+    to bottom,
+    transparent 0,
+    var(--accent) 2.6rem,
+    var(--accent-2) 35%,
+    transparent
+  );
 }
 
 .timeline-item {

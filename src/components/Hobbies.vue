@@ -162,8 +162,13 @@ function handleHobbyClick(hobby) {
   transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.hobby-card:hover .hobby-image img {
-  transform: scale(calc(var(--img-zoom, 1) * 1.07));
+/* Only zoom on real hover devices. On touch, :hover sticks after a tap and
+   scaling an image inside an overflow:hidden + backdrop-filter card triggers
+   an iOS Safari repaint glitch that makes the photo briefly vanish. */
+@media (hover: hover) {
+  .hobby-card:hover .hobby-image img {
+    transform: scale(calc(var(--img-zoom, 1) * 1.07));
+  }
 }
 
 .hobby-content {
